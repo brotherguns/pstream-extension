@@ -1,5 +1,11 @@
 export const isChrome = () => {
-  return chrome.runtime.getURL('').startsWith('chrome-extension://');
+  const url = chrome.runtime.getURL("");
+  // Orion browser on iOS uses the safari-extension:// scheme but exposes full
+  // Chrome extension APIs, so treat it the same as a standard Chrome extension.
+  return (
+    url.startsWith("chrome-extension://") ||
+    url.startsWith("safari-extension://")
+  );
 };
 
 export const isFirefox = () => {
